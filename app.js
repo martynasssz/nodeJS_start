@@ -13,8 +13,18 @@ const server = http.createServer( (req, res) => { //http. this is haw we access 
         return res.end(); //when is return the code witch are down after this return won't be excuted //retunt quit function executing
     }
 
-    if (url === '/message' && method === 'POST') { //we want to be sure, that we hangling a GET request
-        fs.writeFileSync('message.txt', 'DAMMY');
+    if (url === '/message' && method === 'POST') { //we want to be sure, that we hangling a GET request // receiving posted message
+        const body = [];    //because we read the request body
+        req.on('data', (chunk) => { //event listener .on() //listen to data
+          //console.log(chunk);  
+          body.push(chunk);//take a body and push every new element to it
+        }); //allows to listen to certain events 
+        return req.on('end', () => {                 
+          const parsedBody = Buffer.concat(body).toString(); //concat body chunks and convert to string     
+          console.log(parsedBody);
+          const message = parsedBody.split('=')[1];
+          fs.writeFileSync('message.txt', message);
+        });        
         res.statusCode = 302; //302 stand for redirection
         res.setHeader('Location', '/');
         return res.end();
