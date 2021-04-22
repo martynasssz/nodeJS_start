@@ -23,11 +23,13 @@ const server = http.createServer( (req, res) => { //http. this is haw we access 
           const parsedBody = Buffer.concat(body).toString(); //concat body chunks and convert to string     
           console.log(parsedBody);
           const message = parsedBody.split('=')[1];
-          fs.writeFileSync('message.txt', message);
+          fs.writeFile('message.txt', message, err => {
+            res.statusCode = 302; //302 stand for redirection
+            res.setHeader('Location', '/');
+            return res.end();
+          });
         });        
-        res.statusCode = 302; //302 stand for redirection
-        res.setHeader('Location', '/');
-        return res.end();
+        
     }
     res.setHeader('Content-Type', 'text/html');  //this method allows to set a header for response
     res.write('<html>');
