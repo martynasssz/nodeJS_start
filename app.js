@@ -1,10 +1,10 @@
 const http = require('http'); //looks for a global module //imported
-const routes = require('./routes');
 
-//we need send incoming request to route.js file
+const express = require('express'); // import express js
 
-console.log(routes.someText); //example of multiple export
-const server = http.createServer(routes.handler); //routes handle  //execution function what's stored in routes
+const app = express(); //create an express application and store in a constant app like function
+
+const server = http.createServer(app); //app here actually happens to be a valid request hendler,so we pass app to create a server
 //const server = http.createServer(routes);
  
 server.listen(3000);
