@@ -53,8 +53,8 @@ const fs = require('fs');
   // module.exports.someText = 'Some hard coded text';
 
 //shortcut which suport by nodejs also
-handler = requestHandler;
-someText = 'Some hard coded text';
+exports.handler = requestHandler;
+exports.someText = 'Some hard coded text';
 
 
 
