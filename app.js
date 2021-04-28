@@ -8,8 +8,8 @@ const shopRoutes = require('./routes/shop'); //import admin routes
 
 app.use(bodyParser.urlencoded({extended:false})); //extended:false, because it shoud be parse non-default features
 
-// ---!!! Order ir matter! ---
-app.use(adminRoutes); //not calling it like  function just the object itself, the router object we're exporting this file
+//outsources routes
+app.use('/admin', adminRoutes); //admin is as a filter
 app.use(shopRoutes);
 
 app.use((req, res, next) => { // catch all middleware //without path filter
