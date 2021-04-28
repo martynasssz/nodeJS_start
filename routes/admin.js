@@ -2,11 +2,14 @@ const path = require('path');
 
 const express = require('express');
 
+const rootDir = require('../util/path'); //import path.js function
+
+
 const router = express.Router(); //Router() is like mini express app tied to the other express router
 
 // route reached  /admin/add-product => GET
 router.get('/add-product', (req, res, next) => {     
-    res.sendFile(path.join(__dirname, '../', 'views', 'add-product.html'));     
+    res.sendFile(path.join(rootDir, 'views', 'add-product.html'));     
 }); 
 
 //middleware thats handles requests to product

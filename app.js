@@ -1,3 +1,5 @@
+const path = require('path');
+
 const express = require('express'); // import express js
 const bodyParser = require('body-parser');
 
@@ -13,8 +15,8 @@ app.use('/admin', adminRoutes); //admin is as a filter
 app.use(shopRoutes);
 
 app.use((req, res, next) => { // catch all middleware //without path filter
-    res.status(404).send('<h1>Page not found</h1>'); //status method
-}); 
+    res.status(404).sendFile(path.join(__dirname, 'views', '404.html')); 
+});
 
 //use only this offered by expressjs framework insteand const server and sever.listen(3000)
 app.listen(3000); //set up server
