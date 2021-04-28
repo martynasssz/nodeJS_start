@@ -9,6 +9,8 @@ const adminRoutes = require('./routes/admin'); //import admin routes
 const shopRoutes = require('./routes/shop'); //import admin routes
 
 app.use(bodyParser.urlencoded({extended:false})); //extended:false, because it shoud be parse non-default features
+app.use(express.static(path.join(__dirname,'public'))); //user should be able access the public path
+
 
 //outsources routes
 app.use('/admin', adminRoutes); //admin is as a filter
