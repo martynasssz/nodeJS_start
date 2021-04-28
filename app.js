@@ -11,7 +11,9 @@ app.use('/add-product', (req, res, next) => {
 }); 
 
 //middleware thats handles requests to product
-app.use('/product', (req, res, next) => { 
+// if we use post, this middlewave will be trigger for incoming post request with this path
+
+app.post('/product', (req, res, next) => { 
     //redirect and log to console
     console.log(req.body); //req.body a new fied added by express //extracting what user has send
     res.redirect('/'); //redirect to slash route after submit pressing
