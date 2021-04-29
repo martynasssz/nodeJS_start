@@ -2,12 +2,15 @@ const path = require('path');
 
 const express = require('express');
 
-const rootDir = require('../util/path'); //import path.js function
+const rootDir = require('../util/path');
+//access the products array
+const adminData = require('./admin')
 
-const router = express.Router(); //create router object 
+const router = express.Router();
 
-router.get('/', (req, res, next) => { //use() method defined be expressjs, it's allows to add new middleware function    
-    res.sendFile(path.join(rootDir, 'views', 'shop.html')); //sendfile() allows to send back a file to the user //automatically sets content type responce header field
-}); 
+router.get('/', (req, res, next) => {
+  console.log('shop.js', adminData.products);
+  res.sendFile(path.join(rootDir, 'views', 'shop.html'));
+});
 
 module.exports = router;
