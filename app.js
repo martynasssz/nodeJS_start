@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 
 const app = express(); //create an express application and store in a constant app like function
 
+app.set('view engine', 'pug'); //view engine set a string pug (for using pug template engine)
+app.set('views', 'views');
+
 const adminData = require('./routes/admin'); //import admin data
 const shopRoutes = require('./routes/shop'); //import admin routes
 
