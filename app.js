@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 const app = express(); //create an express application and store in a constant app like function
 
-app.set('view engine', 'pug'); //view engine set a string pug (for using pug template engine)
+app.set('view engine', 'pug'); 
 app.set('views', 'views');
 
 const adminData = require('./routes/admin'); //import admin data
@@ -20,7 +20,7 @@ app.use('/admin', adminData.routes); //adminRoutes changed to adminData.routes b
 app.use(shopRoutes);
 
 app.use((req, res, next) => { // catch all middleware //without path filter
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html')); 
+    res.status(404).render('404', {pageTitle: 'Page Not Found'}); //instead sendFile
 });
 
 //use only this offered by expressjs framework insteand const server and sever.listen(3000)

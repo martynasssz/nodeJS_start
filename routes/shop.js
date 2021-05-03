@@ -11,7 +11,7 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
   const product = adminData.products; //take product from admin data products 
 
-  res.render('shop', {prods: product, docTitle:'Shop1'}); //pass, inject into template products
+  res.render('shop', {prods: product, pageTitle:'Shop1', path:'/'}); //pass, inject into template products
   //define what sould be our reponse
 });
 
