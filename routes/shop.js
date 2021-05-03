@@ -9,10 +9,9 @@ const adminData = require('./admin')
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-  //console.log('shop.js', adminData.products);
-  //res.sendFile(path.join(rootDir, 'views', 'shop.html')); //in this response we a sending shop.html file
-  res.render('shop'); // we don't need show.pub because we deffined in app template engine
+  const product = adminData.products; //take product from admin data products 
 
+  res.render('shop', {prods: product, docTitle:'Shop1'}); //pass, inject into template products
   //define what sould be our reponse
 });
 
