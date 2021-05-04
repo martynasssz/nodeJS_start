@@ -2,24 +2,19 @@ const path = require('path');
 
 const express = require('express');
 
-const rootDir = require('../util/path');
+const productsController = require('../controllers/products'); //import product controller ..means up one level
+
+//const rootDir = require('../util/path'); //remove because we don't usi in more
 
 const router = express.Router();
 
-const products = []; //product array
-
 // /admin/add-product => GET
-router.get('/add-product', (req, res, next) => {
-  res.render('add-product', {pageTitle: 'Add Product', path: '/admin/add-product', formsCSS: true, productCSS: true, activeAddProduct: true }); //instead of sendFile // return fied path
-});
+router.get('/add-product', productsController.getAddProduct); //productsController.getAddProduct pass referent to get function, not a function
 
 // /admin/add-product => POST
-router.post('/add-product', (req, res, next) => {
-  //take product and push a new element into this array, a new object
-  products.push({title: req.body.title}); //object has a title and request body, extract title with dot notation
-  res.redirect('/');
-});
+router.post('/add-product', productsController.postAddProduct );
 
 //export products and router
-exports.routes = router;
-exports.products = products; 
+// no longer need export products in admin.js, because we no longer have that array
+
+module.exports = router; //export router as we do in shop.js file

@@ -9,7 +9,7 @@ const app = express(); //create an express application and store in a constant a
 app.set('view engine', 'ejs'); //swith the view egine to hanglebars // registeres a shbs
 app.set('views', 'views');
 
-const adminData = require('./routes/admin'); //import admin data
+const adminRoutes = require('./routes/admin'); //import admin data
 const shopRoutes = require('./routes/shop'); //import admin routes
 
 app.use(bodyParser.urlencoded({extended:false})); //extended:false, because it shoud be parse non-default features
@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname,'public'))); //user should be able ac
 
 
 //outsources routes
-app.use('/admin', adminData.routes); //adminRoutes changed to adminData.routes because in admin js rewrite exports.routes = router;
+app.use('/admin', adminRoutes); //adminRoutes because changed export
 app.use(shopRoutes);
 
 app.use((req, res, next) => { // catch all middleware //without path filter
