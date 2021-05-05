@@ -2,7 +2,10 @@ const path = require('path');
 
 const express = require('express'); // import express js
 const bodyParser = require('body-parser');
-const expressHbs = require('express-handlebars'); //import express handlebars
+
+const errorController = require('./controllers/error');
+
+//const expressHbs = require('express-handlebars'); //import express handlebars
 
 const app = express(); //create an express application and store in a constant app like function
 
@@ -20,9 +23,7 @@ app.use(express.static(path.join(__dirname,'public'))); //user should be able ac
 app.use('/admin', adminRoutes); //adminRoutes because changed export
 app.use(shopRoutes);
 
-app.use((req, res, next) => { // catch all middleware //without path filter
-    res.status(404).render('404', {pageTitle: 'Page Not Found', path:null}); //instead sendFile
-});
+app.use(errorController.get404); //get from error controller
 
 //use only this offered by expressjs framework insteand const server and sever.listen(3000)
 app.listen(3000); //set up server
