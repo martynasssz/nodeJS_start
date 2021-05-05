@@ -19,15 +19,16 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {   
     //fetch all products
-      const products = Product.fetchAll(); //use static method  
-    res.render('shop', {  //pass, inject into template products
-      prods: products, 
-      pageTitle:'Shop1', 
-      path:'/', 
-      hasProducts: products.length > 0, // hasProducts: products.length > 0 for handlebars
-      activeShop: true, //set true to ensure for this route, that active class is added
-      productCSS: true,     
-    }); //define what sould be our reponse  
+     Product.fetchAll(products => { //use static method  
+      res.render('shop', {  //pass, inject into template products
+        prods: products, 
+        pageTitle:'Shop1', 
+        path:'/', 
+        hasProducts: products.length > 0, // hasProducts: products.length > 0 for handlebars
+        activeShop: true, //set true to ensure for this route, that active class is added
+        productCSS: true
+      });         
+    }); 
   };
 
 
