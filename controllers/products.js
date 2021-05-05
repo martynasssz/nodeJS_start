@@ -1,7 +1,7 @@
 const Product = require('../models/product'); //importing Product class
 
 exports.getAddProduct = (req, res, next) => { //we get the add-product page //help to get add-product
-    res.render('add-product', {
+    res.render('admin/add-product', { //new path to view
         pageTitle: 'Add Product', 
         path: '/admin/add-product', 
         formsCSS: true, 
@@ -20,7 +20,7 @@ exports.postAddProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {   
     //fetch all products
      Product.fetchAll(products => { //use static method  
-      res.render('shop', {  //pass, inject into template products
+      res.render('shop/product-list', {  //pass, inject into template products // shop/product-list new path to view
         prods: products, 
         pageTitle:'Shop1', 
         path:'/', 
