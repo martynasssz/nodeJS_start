@@ -1,4 +1,4 @@
-const products = []; //product array
+const Product = require('../models/product'); //importing Product class
 
 exports.getAddProduct = (req, res, next) => { //we get the add-product page //help to get add-product
     res.render('add-product', {
@@ -10,14 +10,17 @@ exports.getAddProduct = (req, res, next) => { //we get the add-product page //he
     }); 
   };
 
-exports.postAddProduct = (req, res, next) => {
-    products.push({title: req.body.title}); //object has a title and request body, extract title with dot notation
+exports.postAddProduct = (req, res, next) => { 
+    // create a new object based on this class blueprint and that is what classes are in the end, they are blueprints.
+      const product = new Product(req.body.title); //instentiate object
+      product.save(); //use save method defined in Product class
     res.redirect('/');
   };
 
-exports.getProducts = (req, res, next) => {
-    //const products = adminData.products;  so products here doesn't have to be extracted from anywhere and again we will change this.
-      res.render('shop', {  //pass, inject into template products
+exports.getProducts = (req, res, next) => {   
+    //fetch all products
+      const products = Product.fetchAll(); //use static method  
+    res.render('shop', {  //pass, inject into template products
       prods: products, 
       pageTitle:'Shop1', 
       path:'/', 
