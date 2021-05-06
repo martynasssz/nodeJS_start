@@ -41,4 +41,13 @@ module.exports = class Product {
     static fetchAll(cb) { //fetchAll() utility function //cb - argument which holds a fumnction (callback)
         getProductsFromFile(cb);          
     }
+
+    //load single method
+    //static function into which we pass ID (expected to get) and callback (cb) which will be executed once we're done finding the product here.
+    static findById(id, cb) {
+       getProductsFromFile(products => {
+          const product = products.find(p => p.id === id);  //find my product and store in const variable temporaly // this will execute a function we pass to find on every element in the array and we'll return the element for which this function we pass returns true.
+          cb(product);
+       }); 
+    }
 };
