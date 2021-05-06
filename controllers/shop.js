@@ -14,9 +14,13 @@ exports.getProducts = (req, res, next) => {
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId, product => {
-    console.log(product);
-  } );
-  res.redirect('/');
+    res.render('shop/product-detail', {//passing product property  
+      product: product,
+      pageTitle: product.title, //et dinamicallyp product title
+      path: '/products' //path which we want to mark in navigation
+    });  
+  }); 
+ 
 }
 
 //render index page
