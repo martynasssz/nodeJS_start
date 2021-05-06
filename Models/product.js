@@ -19,8 +19,11 @@ const getProductsFromFile = cb => { //helper function
     }); 
 } 
 module.exports = class Product {
-    constructor(t) {
-        this.title = t; //t means a title //property of this class
+    constructor(title, imageUrl, description, price) {
+        this.title = title; 
+        this.imageUrl = imageUrl;
+        this.description = description;
+        this.price = price;
     }
 
     save() { // save method available in this class
