@@ -26,6 +26,7 @@ exports.postAddProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
     Product.fetchAll(products => { //use static method  
         res.render('admin/products', {  //pass, inject into template products // render shop index.ejs
+          prods: products,  
           pageTitle:'Admin Products', 
           path:'/admin/products',      
         });         
