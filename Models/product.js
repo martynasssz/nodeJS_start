@@ -27,6 +27,7 @@ module.exports = class Product {
     }
 
     save() { // save method available in this class
+        this.id = Math.random().toString(); // toString() - text unique id
         getProductsFromFile(products => {
           products.push(this);         
           fs.writeFile (p, JSON.stringify(products), (err) => {
