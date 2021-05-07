@@ -13,13 +13,10 @@ router.get('/add-product', adminController.getAddProduct); //productsController.
 // /admin/products => GET
 router.get('/products', adminController.getProducts);
 
-
-
 // /admin/add-product => POST
 router.post('/add-product', adminController.postAddProduct );
 
-
-
+router.get('/edit-product/:productId', adminController.getEditProduct);
 
 
 module.exports = router; //export router as we do in shop.js file
