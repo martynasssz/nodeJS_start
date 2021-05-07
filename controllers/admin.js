@@ -40,6 +40,10 @@ exports.getEditProduct = (req, res, next) => { //we get the add-product page //h
     }); 
 };
 
+exports.postEditProduct = (req, res, next) => {
+
+};
+
 //check products and render my view
 exports.getProducts = (req, res, next) => {
     Product.fetchAll(products => { //use static method  
