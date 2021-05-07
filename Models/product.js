@@ -2,6 +2,8 @@
 const fs = require('fs'); //use files system
 const path = require('path'); //use path module to construct a path that works om all operating systems
 
+const Cart = require('./cart');
+
 //global helper
 const p = path.join(
     path.dirname(process.mainModule.filename), //root directory, in there we will have new data folder, in data folder store file products.json
@@ -52,6 +54,19 @@ module.exports = class Product {
           }             
         });    
     }  
+
+    static deleteById(id) {
+        getProductsFromFile(products => {
+          const product = products.find(prod => prod.id === id);
+          const updatedProducts = products.filter(prod => prod.id !== id);
+          fs.writeFile(p, JSON.stringify(updatedProducts), err => {
+            if (!err) {
+              Cart.deleteProduct(id, product.price);
+            }
+          });
+        });
+      }
+  
 
     //retreive product from this array
     // static means that I can call this method directly on the class itself and not on an instantiated object

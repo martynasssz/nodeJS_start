@@ -65,5 +65,11 @@ exports.getProducts = (req, res, next) => {
           pageTitle:'Admin Products', 
           path:'/admin/products',      
         });         
-      }); 
+    }); 
+};
+
+exports.postDeleteProduct = (req, res, next) => {
+    const prodId = req.body.productId; //extract the product ID from the request body by accessing product ID    
+    Product.deleteById(prodId);
+    res.redirect('/admin/products');  
 };

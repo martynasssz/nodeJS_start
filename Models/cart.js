@@ -9,7 +9,7 @@ const p = path.join(
 ); 
 
 module.exports = class Cart {
-    //instead constructor
+    //instead constructor use static method
     static addProduct(id, productPrice) {
         //Feth the previous cart
         fs.readFile(p, (err, fileContent) => { //(err, fileContent) call if we'll err or file content
@@ -45,4 +45,36 @@ module.exports = class Cart {
             });     
         });
     };
+
+    static deleteProduct (id, productPrice) { //productPrice we use because we'll need to update the total cart price.
+        //first  need to get my cart //to read file
+        fs.readFile(p, (err, fileContent) => {
+            if (err) {
+               return; 
+            }
+            const updatedCart = {...JSON.parse(fileContent) };
+            const product = updatedCart.products.find(prod => prod.id === id);
+            const productQty = product.qty;
+            updatedCart.products = updatedCart.products.filter(
+               prod => prod.id !== id 
+            );
+            updatedCart.totalPrice = 
+               updatedCart.totalPrice - productPrice * productQty;
+               
+            fs.writeFile(p, JSON.stringify(updatedCart), err => {
+               console.log(err);
+            });   
+        });
+    }
+
+    static getCart(cb) {
+        fs.readFile(p, (err, fileContent) => {
+          const cart = JSON.parse(fileContent);
+          if (err) {
+            cb(null);
+          } else {
+            cb(cart);
+          }
+        });
+      }
 };
