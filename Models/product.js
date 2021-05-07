@@ -19,20 +19,37 @@ const getProductsFromFile = cb => { //helper function
     }); 
 } 
 module.exports = class Product {
-    constructor(title, imageUrl, price, description) {
+    constructor(id, title, imageUrl, price, description) {
+        this.id = id;
         this.title = title; 
         this.imageUrl = imageUrl;
         this.description = description;
         this.price = price;
     }
 
-    save() { // save method available in this class
-        this.id = Math.random().toString(); // toString() - text unique id
+    save() { // save method available in this class     
         getProductsFromFile(products => {
-          products.push(this);         
-          fs.writeFile (p, JSON.stringify(products), (err) => {
+          if (this.id) { //check if this id is already existing
+        /*Now in this if statement, I we want to update the existing product and for that, we need to find it first.
+        So we'll find existingRroductIndex by searching for or going through all our products with the findIndex method,
+        products will be an array and there,we will get access to all our products stored in the temporary
+        prod argument here or in the prod argument of this anonymous function and we check
+        if the ID of the product we're looking at in this array is equal to this ID, we now looking at the product I plan on editing.*/
+            const existingProductIndex = products.findIndex(
+                prod => prod.id === this.id
+            );
+            const updatedProducts = [...products];
+            updatedProducts[existingProductIndex] = this;
+            fs.writeFile (p, JSON.stringify(updatedProducts), err => {
+                console.log(err);
+            });   
+          } else {
+            this.id = Math.random().toString(); // toString() - text unique id
+            products.push(this);         
+            fs.writeFile (p, JSON.stringify(products), err => {
               console.log(err);
-          });   
+            });   
+          }             
         });    
     }  
 
