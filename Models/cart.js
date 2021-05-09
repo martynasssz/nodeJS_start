@@ -65,16 +65,16 @@ module.exports = class Cart {
                console.log(err);
             });   
         });
-    }
+    }    
 
-    static getCart(cb) {
+    static getCart(cb) { //return entire cart
         fs.readFile(p, (err, fileContent) => {
-          const cart = JSON.parse(fileContent);
-          if (err) {
-            cb(null);
-          } else {
-            cb(cart);
-          }
-        });
-      }
+            const cart = JSON.parse(fileContent);
+            if (err) {
+            cb(null);  //return null
+            } else {
+            cb(cart);  //return cart with valid values
+            }            
+        });    
+    }
 };
