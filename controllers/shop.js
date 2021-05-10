@@ -3,13 +3,15 @@ const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {   
     //fetch all products
-     Product.fetchAll(products => { //use static method  
+    Product.fetchAll()
+    .then(([rows, fieldData]) => {
       res.render('shop/product-list', {  //pass, inject into template products // shop/product-list new path to view
-        prods: products, 
+        prods: rows, 
         pageTitle:'All Products', 
-        path:'/',       
-      });         
-    }); 
+        path:'/products',       
+      }); 
+    })
+    .catch(err => console.log(err));
   };
 
 exports.getProduct = (req, res, next) => {
@@ -20,19 +22,20 @@ exports.getProduct = (req, res, next) => {
       pageTitle: product.title, //et dinamicallyp product title
       path: '/products' //path which we want to mark in navigation
     });  
-  }); 
- 
+  });  
 }
 
 //render index page
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll(products => { //use static method  
+  Product.fetchAll()
+  .then(([rows, fieldData]) => {
     res.render('shop/index', {  //pass, inject into template products // render shop index.ejs
-      prods: products,
+      prods: rows, //rows should be our products
       pageTitle:'Shop', 
-      path:'/',      
-    });         
-  }); 
+      path:'/'  
+    });
+  })
+  .catch(err => console.log(err)); //return promise instead earlear callback when we fetch data from file       
 };
 
 exports.getCart = (req, res, next) => {
