@@ -54,6 +54,9 @@ module.exports = class Cart {
             }
             const updatedCart = {...JSON.parse(fileContent) };
             const product = updatedCart.products.find(prod => prod.id === id);
+            if (!product) { //check here is true, that means we don't have a product then weneed to return here, we don't want to continue,  wedon't want to try to edit it because it's not part of the cart.
+              return;  
+            }
             const productQty = product.qty;
             updatedCart.products = updatedCart.products.filter(
                prod => prod.id !== id 
