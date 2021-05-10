@@ -15,9 +15,13 @@ exports.postAddProduct = (req, res, next) => {
     const price = req.body.price;
     const description = req.body.description;
     // create a new object based on this class blueprint and that is what classes are in the end, they are blueprints.
-    const product = new Product(null, title, imageUrl, price, description); //product will be created with all data: (null, title, imageUrl, price, description) //null as first argument
-    product.save(); //use save method defined in Product class
-    res.redirect('/');
+    const product = new Product(null, title, imageUrl, description, price); //product will be created with all data: (null, title, imageUrl, price, description) //null as first argument
+    product
+      .save()
+      .then(() => {
+          res.redirect('/'); //redirect once the insert completed
+      })
+      .catch(err => console.log(err));    
 };
 
 exports.getEditProduct = (req, res, next) => { //we get the add-product page //help to get add-product
