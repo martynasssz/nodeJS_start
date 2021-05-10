@@ -16,6 +16,8 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin'); //import admin data
 const shopRoutes = require('./routes/shop'); //import admin routes
 
+db.execute('SELECT * FROM products').then().catch();
+
 app.use(bodyParser.urlencoded({extended:false})); //extended:false, because it shoud be parse non-default features
 app.use(express.static(path.join(__dirname,'public'))); //user should be able access the public path
 
