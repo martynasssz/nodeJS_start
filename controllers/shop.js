@@ -16,14 +16,17 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  Product.findById(prodId, product => {    
-    res.render('shop/product-detail', {//passing product property  
-      product: product,
-      pageTitle: product.title, //et dinamicallyp product title
-      path: '/products' //path which we want to mark in navigation
-    });  
-  });  
-}
+  Product.findById(prodId)
+    .then(([product]) => {
+      console.log(product);
+      res.render('shop/product-detail', {//passing product property  
+        product: product[0],
+        pageTitle: product.title, //et dinamicallyp product title
+        path: '/products' //path which we want to mark in navigation
+    });
+  })  
+    .catch(err => console.log(err));  
+};
 
 //render index page
 exports.getIndex = (req, res, next) => {
