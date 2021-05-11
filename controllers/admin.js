@@ -67,14 +67,18 @@ exports.postEditProduct = (req, res, next) => {
 
 //check products and render my view
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll(products => { //use static method  
-        res.render('admin/products', {  //pass, inject into template products // render shop index.ejs
-            prods: products,
-            pageTitle: 'Admin Products',
-            path: '/admin/products',
-        });
+    Product.findAll()
+    .then(products => {
+      res.render('admin/products', {
+        prods: products,
+        pageTitle: 'All Products',
+        path: '/admin/products'
+      });
+    })
+    .catch(err => {
+      console.log(err);
     });
-};
+}; 
 
 exports.postDeleteProduct = (req, res, next) => {
     const prodId = req.body.productId; //extract the product ID from the request body by accessing product ID    
