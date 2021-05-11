@@ -28,42 +28,49 @@ exports.postAddProduct = (req, res, next) => {
         });
 };
 
-exports.getEditProduct = (req, res, next) => { //we get the add-product page //help to get add-product
-    /*check query parameters*/
+//sequelize syntax get product to edit
+exports.getEditProduct = (req, res, next) => {
     const editMode = req.query.edit;
     if (!editMode) {
-        return res.redirect('/');
+      return res.redirect('/');
     }
     const prodId = req.params.productId;
-    Product.findById(prodId, product => {
+    Product.findByPk(prodId)
+      .then(product => {
         if (!product) {
-            return res.redirect('/');
+          return res.redirect('/');
         }
-        res.render('admin/edit-product', { //new path to view        
-            pageTitle: 'Edit Product',
-            path: '/admin/edit-product',
-            editing: editMode,
-            product: product // pass product on a product key //pass product information into view
+        res.render('admin/edit-product', {
+          pageTitle: 'Edit Product',
+          path: '/admin/edit-product',
+          editing: editMode,
+          product: product
         });
-    });
-};
+      })
+      .catch(err => console.log(err));
+  };
 
+//sequelize syntax for saving updaed product 
 exports.postEditProduct = (req, res, next) => {
     const prodId = req.body.productId;
     const updatedTitle = req.body.title;
     const updatedPrice = req.body.price;
     const updatedImageUrl = req.body.imageUrl;
     const updatedDesc = req.body.description;
-    const updatedProduct = new Product(
-        prodId,
-        updatedTitle,
-        updatedImageUrl,
-        updatedDesc,
-        updatedPrice
-    );
-    updatedProduct.save();
-    res.redirect('/admin/products');
-};
+    Product.findByPk(prodId)
+      .then(product => {
+        product.title = updatedTitle;
+        product.price = updatedPrice;
+        product.description = updatedDesc;
+        product.imageUrl = updatedImageUrl;
+        return product.save();
+      })
+      .then(result => {
+        console.log('UPDATED PRODUCT!');
+        res.redirect('/admin/products');
+      })
+      .catch(err => console.log(err));
+  };
 
 //check products and render my view
 exports.getProducts = (req, res, next) => {
