@@ -26,13 +26,13 @@ app.use(shopRoutes);
 app.use(errorController.get404); //get from error controller
 
 sequelize
-    .sync().then(result => {
-        //console.log(result);
-    })y
-    
+    .sync()
+    .then(result => {
+        app.listen(3000); 
+    })
+
     .catch(err => {
         console.log(err);
     });
 
-//use only this offered by expressjs framework insteand const server and sever.listen(3000)
-app.listen(3000); //set up server
+
