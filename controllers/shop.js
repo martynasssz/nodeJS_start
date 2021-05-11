@@ -2,17 +2,18 @@ const Product = require('../models/product'); //importing Product class
 const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {   
-    //fetch all products
-    Product.fetchAll()
-    .then(([rows, fieldData]) => {
-      res.render('shop/product-list', {  //pass, inject into template products // shop/product-list new path to view
-        prods: rows, 
-        pageTitle:'All Products', 
-        path:'/products',       
-      }); 
-    })
-    .catch(err => console.log(err));
-  };
+  Product.findAll()
+  .then(products => {
+    res.render('shop/index', {  //pass, inject into template products // render shop index.ejs
+      prods: products, 
+      pageTitle:'All Products', 
+      path:'/products',  
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  });      
+};
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
@@ -28,17 +29,19 @@ exports.getProduct = (req, res, next) => {
     .catch(err => console.log(err));  
 };
 
-//render index page
+//render from sequelize
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll()
-  .then(([rows, fieldData]) => {
+  Product.findAll()
+  .then(products => {
     res.render('shop/index', {  //pass, inject into template products // render shop index.ejs
-      prods: rows, //rows should be our products
+      prods: products, //rows should be our products
       pageTitle:'Shop', 
       path:'/'  
     });
   })
-  .catch(err => console.log(err)); //return promise instead earlear callback when we fetch data from file       
+  .catch(err => {
+    console.log(err);
+  });
 };
 
 exports.getCart = (req, res, next) => {
