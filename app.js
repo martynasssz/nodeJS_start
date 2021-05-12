@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
-
-//const expressHbs = require('express-handlebars'); //import express handlebars
+const Product = require('./models/product');
+const User = require('./models/user');
 
 const app = express(); //create an express application and store in a constant app like function
 
@@ -25,12 +25,15 @@ app.use(shopRoutes);
 
 app.use(errorController.get404); //get from error controller
 
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(Product);
+
+//Relate models 
 sequelize
-    .sync()
+    .sync({ force: true })
     .then(result => {
         app.listen(3000); 
     })
-
     .catch(err => {
         console.log(err);
     });
