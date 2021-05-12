@@ -37,8 +37,12 @@ exports.getEditProduct = (req, res, next) => {
         return res.redirect('/');
     }
     const prodId = req.params.productId;
-    Product.findByPk(prodId)
-        .then(product => {
+    //want to find products for the currently logged in user though
+    req.user
+        .getProducts({ where: { id: prodId }})
+        // Product.findByPk(prodId)
+        .then(products => {
+            const product = products[0];
             if (!product) {
                 return res.redirect('/');
             }
@@ -76,7 +80,10 @@ exports.postEditProduct = (req, res, next) => {
 
 //check products and render my view
 exports.getProducts = (req, res, next) => {
-    Product.findAll()
+    //Product.findAll()
+    //get user's products
+    req.user
+        .getProducts()
         .then(products => {
             res.render('admin/products', {
                 prods: products,
