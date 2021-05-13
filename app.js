@@ -9,6 +9,8 @@ const Product = require('./models/product');
 const User = require('./models/user');
 const Cart = require('./models/cart');
 const CartItem = require('./models/cart-item');
+const Order = require('./models/order');
+const OrderItem = require('./models/order-item');
 
 const app = express(); //create an express application and store in a constant app like function
 
@@ -42,6 +44,9 @@ User.hasOne(Cart);
 Cart.belongsTo(User);
 Cart.belongsToMany(Product, { through: CartItem} ); // through keep telling sequelize where these connection should be stored and that is out cart item model
 Product.belongsToMany(Cart, { through: CartItem});
+User.hasMany(Order); // order belongs to a user and it doesn't belong to many users because a single order is always belonging to one user who placed the order and the user may have many order //it's a one to many relationship
+Order.belongsToMany(Product, {through: OrderItem})  // Now an order however can belong to many products
+
 
 //Relate models 
 sequelize
