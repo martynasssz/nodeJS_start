@@ -4,8 +4,6 @@ const express = require('express');
 
 const adminController = require('../controllers/admin'); //import product controller ..means up one level
 
-//const rootDir = require('../util/path'); //remove because we don't usi in more
-
 const router = express.Router();
 
 // /admin/add-product => GET
