@@ -2,6 +2,7 @@ const path = require('path');
 
 const express = require('express'); // import express js
 const bodyParser = require('body-parser');
+const session  = require('express-session');
 
 const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
@@ -26,6 +27,7 @@ const authRoutes = require('./routes/auth'); //import admin routes
 
 app.use(bodyParser.urlencoded({ extended: false })); //extended:false, because it shoud be parse non-default features
 app.use(express.static(path.join(__dirname, 'public'))); //user should be able access the public path
+app.use(session({secret: 'my secret', resave: false, saveUninitialized:false}));//register a middleware (initialize)
 
 app.use((req, res, next) => {
     User.findByPk(1)
